@@ -2,7 +2,6 @@ const express = require("express");
 const path = require("path");
 const { open } = require("sqlite");
 const sqlite3 = require("sqlite3");
-const bcrypt = require("bcrypt");
 const app = express();
 app.use(express.json());
 const dbPath = path.join(__dirname, "goodreads.db");
@@ -26,8 +25,7 @@ initializeDBAndServer();
 
 // User Register API
 app.post("/users/", async (request, response) => {
-  const { username, name, password, gender, location } = request.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const { username, email, gender, location } = request.body;
   const selectUserQuery = `
     SELECT 
       * 
@@ -39,12 +37,11 @@ app.post("/users/", async (request, response) => {
   if (dbUser === undefined) {
     const createUserQuery = `
      INSERT INTO
-      user (username, name, password, gender, location)
+      user (username,email, gender, location)
      VALUES
       (
        '${username}',
-       '${name}',
-       '${hashedPassword}',
+       '${email}',
        '${gender}',
        '${location}'  
       );`;
