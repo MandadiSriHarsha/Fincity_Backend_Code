@@ -23,6 +23,12 @@ const initializeDBAndServer = async () => {
 };
 initializeDBAndServer();
 
+//Check API
+app.get("/",(request,response)=>{
+  response.status(200);
+  response.send("API Working");
+})
+
 // User Register API
 app.post("/users/", async (request, response) => {
   const { username, email, gender, location } = request.body;
