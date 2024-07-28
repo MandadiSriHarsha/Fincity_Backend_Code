@@ -24,7 +24,7 @@ const initializeDBAndServer = async () => {
 initializeDBAndServer();
 
 //Check API
-app.get("/",(request,response)=>{
+app.get("/home",(request,response)=>{
   response.status(200);
   response.send("API Working");
 })
